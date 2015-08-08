@@ -18,20 +18,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCE-2w-3Zj">
-                                <rect key="frame" x="277" y="550" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="284" y="550" width="32" height="30"/>
+                                <state key="normal" title="start"/>
                                 <connections>
                                     <action selector="ClickStartButton:" destination="BYZ-38-t0r" eventType="touchDown" id="qxz-Wh-lEm"/>
                                     <action selector="ClickStopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I7J-LC-L5l"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="record" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0r-zY-afq">
+                                <rect key="frame" x="275" y="521" width="50" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="10" id="DpH-Up-8Mh"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="20" id="The-rk-6iz"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UUy-vH-rpL"/>
+                            <constraint firstItem="A0r-zY-afq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b6b-XV-B9n"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="recordButton" destination="yCE-2w-3Zj" id="nMJ-JB-574"/>
+                        <outlet property="stateLabel" destination="A0r-zY-afq" id="zr3-JS-6Xb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
