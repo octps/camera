@@ -30,6 +30,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
 
+    var playerItem : AVPlayerItem!
+    var videoPlayer : AVPlayer!
+    var myLayer : AVPlayerLayer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -107,10 +111,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
     }
     
+    
     func onClickStopButton(sender: UIButton){
         if isRecording {
             fileOutput.stopRecording()
-            
             isRecording = false
             stateLabel.text = ""
             recordButton.setTitle("start", forState: UIControlState.Normal)
@@ -121,7 +125,49 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+        // showVideo
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+        let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+        
+        previewLayer?.removeFromSuperlayer()
+        
+        let avAsset = AVURLAsset(URL: fileURL, options: nil)
+        
+        playerItem = AVPlayerItem(asset: avAsset)
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        let videoPlayerView = AVPlayerView(frame: self.view.bounds)
+        
+        myLayer = videoPlayerView.layer as! AVPlayerLayer
+        myLayer.videoGravity = AVLayerVideoGravityResizeAspect
+        myLayer.player = videoPlayer
+        
+        self.view.layer.addSublayer(myLayer)
+        myLayer?.frame = CGRectMake(10, 20, 300, 300)
+        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
+        videoPlayer.play()
+        
+        //wirte video
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
+
     }
+}
+
+class AVPlayerView : UIView{
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    override class func layerClass() -> AnyClass{
+        return AVPlayerLayer.self
+    }
+    
 }
