@@ -146,15 +146,31 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         self.view.layer.addSublayer(myLayer)
         myLayer?.frame = CGRectMake(10, 20, 300, 300)
-        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
-        videoPlayer.play()
+        
+        startMovie()
         
         //wirte video
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
 
     }
+    
+    func startMovie() {
+        /* 動画の終了を監視 */
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
+            name: AVPlayerItemDidPlayToEndTimeNotification,
+            object: self.playerItem)
+        
+        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
+        videoPlayer.play()
+    }
+    
+    func playerDidPlayToEndTime(notification: NSNotification) {
+        startMovie()
+    }
+
 }
+
 
 class AVPlayerView : UIView{
     
