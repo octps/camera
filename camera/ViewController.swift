@@ -126,6 +126,18 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         
+        // カメラとのセッションを削除
+        self.captureSession.stopRunning()
+//        for output in self.captureSession.outputs {
+//            self.captureSession.removeOutput(output as! AVCaptureOutput)
+//        }
+//        
+//        for input in self.captureSession.inputs {
+//            self.captureSession.removeInput(input as! AVCaptureInput)
+//        }
+////        self.captureSession = nil
+////        self.device = nil
+        
         // showVideo
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as String
@@ -160,13 +172,18 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
             name: AVPlayerItemDidPlayToEndTimeNotification,
             object: self.playerItem)
-        
-        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
+       videoPlayer.seekToTime(kCMTimeZero)
+//        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
         videoPlayer.play()
     }
     
     func playerDidPlayToEndTime(notification: NSNotification) {
-        startMovie()
+        repeatMovie()
+    }
+    
+    func repeatMovie() {
+        videoPlayer.seekToTime(kCMTimeZero)
+        videoPlayer.play()
     }
 
 }
