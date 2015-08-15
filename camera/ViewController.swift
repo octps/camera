@@ -83,8 +83,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        let sereenWidth = self.view.bounds.width
+        let sereenHeight = (self.view.bounds.height) - 100
         self.view.layer.addSublayer(previewLayer!)
-        previewLayer?.frame = CGRectMake(10, 20, 300, 300)
+        previewLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
+
+//        previewLayer?.frame = CGRectMake(0, 0, 300, 300)
         captureSession.startRunning()
     }
     
@@ -157,7 +161,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         myLayer.player = videoPlayer
         
         self.view.layer.addSublayer(myLayer)
-        myLayer?.frame = CGRectMake(10, 20, 300, 300)
+        let sereenWidth = self.view.bounds.width
+        let sereenHeight = (self.view.bounds.height) - 100
+        self.view.layer.addSublayer(myLayer!)
+        myLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
         
         startMovie()
         
