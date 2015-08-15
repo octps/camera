@@ -30,6 +30,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
 
+    var playerItem : AVPlayerItem!
+    var videoPlayer : AVPlayer!
+    var myLayer : AVPlayerLayer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -79,8 +83,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        let sereenWidth = self.view.bounds.width
+        let sereenHeight = (self.view.bounds.height) - 100
         self.view.layer.addSublayer(previewLayer!)
-        previewLayer?.frame = CGRectMake(10, 20, 300, 300)
+        previewLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
+
+//        previewLayer?.frame = CGRectMake(0, 0, 300, 300)
         captureSession.startRunning()
     }
     
@@ -107,10 +115,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
     }
     
+    
     func onClickStopButton(sender: UIButton){
         if isRecording {
             fileOutput.stopRecording()
-            
             isRecording = false
             stateLabel.text = ""
             recordButton.setTitle("start", forState: UIControlState.Normal)
@@ -121,7 +129,85 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+        // カメラとのセッションを削除
+        self.captureSession.stopRunning()
+//        for output in self.captureSession.outputs {
+//            self.captureSession.removeOutput(output as! AVCaptureOutput)
+//        }
+//        
+//        for input in self.captureSession.inputs {
+//            self.captureSession.removeInput(input as! AVCaptureInput)
+//        }
+////        self.captureSession = nil
+////        self.device = nil
+        
+        // showVideo
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+        let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+        
+        previewLayer?.removeFromSuperlayer()
+        
+        let avAsset = AVURLAsset(URL: fileURL, options: nil)
+        
+        playerItem = AVPlayerItem(asset: avAsset)
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        let videoPlayerView = AVPlayerView(frame: self.view.bounds)
+        
+        myLayer = videoPlayerView.layer as! AVPlayerLayer
+        myLayer.videoGravity = AVLayerVideoGravityResizeAspect
+        myLayer.player = videoPlayer
+        
+        self.view.layer.addSublayer(myLayer)
+        let sereenWidth = self.view.bounds.width
+        let sereenHeight = (self.view.bounds.height) - 100
+        self.view.layer.addSublayer(myLayer!)
+        myLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
+        
+        startMovie()
+        
+        //wirte video
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
+
     }
+    
+    func startMovie() {
+        /* 動画の終了を監視 */
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
+            name: AVPlayerItemDidPlayToEndTimeNotification,
+            object: self.playerItem)
+       videoPlayer.seekToTime(kCMTimeZero)
+//        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
+        videoPlayer.play()
+    }
+    
+    func playerDidPlayToEndTime(notification: NSNotification) {
+        repeatMovie()
+    }
+    
+    func repeatMovie() {
+        videoPlayer.seekToTime(kCMTimeZero)
+        videoPlayer.play()
+    }
+
+}
+
+
+class AVPlayerView : UIView{
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    override class func layerClass() -> AnyClass{
+        return AVPlayerLayer.self
+    }
+    
 }
