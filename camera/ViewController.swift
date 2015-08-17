@@ -29,6 +29,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var captureDevice : AVCaptureDevice?
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
+    var isLooping = false
     
     var playerItem : AVPlayerItem!
     var videoPlayer : AVPlayer!
@@ -86,15 +87,13 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         let sereenWidth = self.view.bounds.width
         let sereenHeight = (self.view.bounds.height) + 90
         self.view.layer.insertSublayer(previewLayer!, atIndex:0)
-        //        self.view.layer.addSublayer(previewLayer!)
         previewLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
         
-        //        previewLayer?.frame = CGRectMake(0, 0, 300, 300)
         captureSession.startRunning()
     }
     
     func onClickStartButton(sender: UIButton){
-        if !isRecording {
+        if (!isRecording && !isLooping) {
             // start recording
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             let documentsDirectory = paths[0] as String
@@ -113,6 +112,17 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             isRecording = true
             stateLabel.text = "recording"
             recordButton.setTitle("stop", forState: UIControlState.Normal)
+        }
+        if (!isRecording && isLooping) {
+            myLayer?.removeFromSuperlayer()
+            //bigin camera
+            captureSession.startRunning()
+
+            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(previewLayer!, atIndex:0)
+            previewLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
         }
     }
     
@@ -161,11 +171,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         myLayer.videoGravity = AVLayerVideoGravityResizeAspect
         myLayer.player = videoPlayer
         
-        //        self.view.layer.addSublayer(myLayer)
         let sereenWidth = self.view.bounds.width
         let sereenHeight = (self.view.bounds.height) + 90
         self.view.layer.insertSublayer(myLayer!, atIndex:0)
-        //        self.view.layer.addSublayer(myLayer!)
         myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
         
         startMovie()
@@ -184,6 +192,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         videoPlayer.seekToTime(kCMTimeZero)
         //        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
         videoPlayer.play()
+        recordButton.setTitle("return camera", forState: UIControlState.Normal)
+        isLooping = true
     }
     
     func playerDidPlayToEndTime(notification: NSNotification) {
