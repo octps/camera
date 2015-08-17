@@ -29,11 +29,11 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var captureDevice : AVCaptureDevice?
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
-
+    
     var playerItem : AVPlayerItem!
     var videoPlayer : AVPlayer!
     var myLayer : AVPlayerLayer!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -57,7 +57,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     func configureDevice() {
         if let device = captureDevice {
             do {
-                 try device.lockForConfiguration()
+                try device.lockForConfiguration()
             }
             catch {
                 print(error)
@@ -84,11 +84,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         let sereenWidth = self.view.bounds.width
-        let sereenHeight = (self.view.bounds.height) - 100
-        self.view.layer.addSublayer(previewLayer!)
-        previewLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
-
-//        previewLayer?.frame = CGRectMake(0, 0, 300, 300)
+        let sereenHeight = (self.view.bounds.height) + 90
+        self.view.layer.insertSublayer(previewLayer!, atIndex:0)
+        //        self.view.layer.addSublayer(previewLayer!)
+        previewLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+        
+        //        previewLayer?.frame = CGRectMake(0, 0, 300, 300)
         captureSession.startRunning()
     }
     
@@ -99,7 +100,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             let documentsDirectory = paths[0] as String
             let filePath : String? = "\(documentsDirectory)/temp.mp4"
             let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-
+            
             if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
                 do {
                     try NSFileManager.defaultManager().removeItemAtPath(filePath!)
@@ -132,15 +133,15 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         // カメラとのセッションを削除
         self.captureSession.stopRunning()
-//        for output in self.captureSession.outputs {
-//            self.captureSession.removeOutput(output as! AVCaptureOutput)
-//        }
-//        
-//        for input in self.captureSession.inputs {
-//            self.captureSession.removeInput(input as! AVCaptureInput)
-//        }
-////        self.captureSession = nil
-////        self.device = nil
+        //        for output in self.captureSession.outputs {
+        //            self.captureSession.removeOutput(output as! AVCaptureOutput)
+        //        }
+        //
+        //        for input in self.captureSession.inputs {
+        //            self.captureSession.removeInput(input as! AVCaptureInput)
+        //        }
+        ////        self.captureSession = nil
+        ////        self.device = nil
         
         // showVideo
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
@@ -160,18 +161,19 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         myLayer.videoGravity = AVLayerVideoGravityResizeAspect
         myLayer.player = videoPlayer
         
-        self.view.layer.addSublayer(myLayer)
+        //        self.view.layer.addSublayer(myLayer)
         let sereenWidth = self.view.bounds.width
-        let sereenHeight = (self.view.bounds.height) - 100
-        self.view.layer.addSublayer(myLayer!)
-        myLayer?.frame = CGRectMake(0, 20, sereenWidth, sereenHeight)
+        let sereenHeight = (self.view.bounds.height) + 90
+        self.view.layer.insertSublayer(myLayer!, atIndex:0)
+        //        self.view.layer.addSublayer(myLayer!)
+        myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
         
         startMovie()
         
         //wirte video
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
-
+        
     }
     
     func startMovie() {
@@ -179,8 +181,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
             name: AVPlayerItemDidPlayToEndTimeNotification,
             object: self.playerItem)
-       videoPlayer.seekToTime(kCMTimeZero)
-//        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
+        videoPlayer.seekToTime(kCMTimeZero)
+        //        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
         videoPlayer.play()
     }
     
@@ -192,7 +194,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         videoPlayer.seekToTime(kCMTimeZero)
         videoPlayer.play()
     }
-
+    
 }
 
 
