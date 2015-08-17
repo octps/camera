@@ -18,20 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCE-2w-3Zj">
-                                <rect key="frame" x="284" y="552" width="32" height="28"/>
-                                <state key="normal" title="start"/>
-                                <connections>
-                                    <action selector="ClickStartButton:" destination="BYZ-38-t0r" eventType="touchDown" id="qxz-Wh-lEm"/>
-                                    <action selector="ClickStopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I7J-LC-L5l"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="record" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0r-zY-afq">
-                                <rect key="frame" x="275" y="521" width="50" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2hG-UA-v8L">
                                 <rect key="frame" x="0.0" y="543" width="600" height="57"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +25,20 @@
                                     <constraint firstAttribute="height" constant="57" id="G35-b9-0nm"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="record" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0r-zY-afq">
+                                <rect key="frame" x="275" y="340" width="50" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCE-2w-3Zj">
+                                <rect key="frame" x="284" y="486" width="32" height="30"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="ClickStartButton:" destination="BYZ-38-t0r" eventType="touchDown" id="qxz-Wh-lEm"/>
+                                    <action selector="ClickStopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I7J-LC-L5l"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -49,8 +49,17 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="20" id="The-rk-6iz"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UUy-vH-rpL"/>
                             <constraint firstItem="A0r-zY-afq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b6b-XV-B9n"/>
-                            <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="1" id="t4e-wn-mzM"/>
+                            <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="27" id="dEJ-D0-MRH"/>
+                            <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="125" id="epM-jc-so2"/>
+                            <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="8" symbolic="YES" id="t4e-wn-mzM"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="t4e-wn-mzM"/>
+                                <exclude reference="DpH-Up-8Mh"/>
+                                <exclude reference="The-rk-6iz"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="recordButton" destination="yCE-2w-3Zj" id="nMJ-JB-574"/>
