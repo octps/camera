@@ -136,8 +136,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         generator.maximumSize = self.view.frame.size
                 
         // 静止画用のImageViewを生成.
-        clipView.image = UIImage(CGImage: try! generator.copyCGImageAtTime(avAsset.duration, actualTime: nil))
-        
+        let image =  UIImage(CGImage: try! generator.copyCGImageAtTime(avAsset.duration, actualTime: nil))
+        let rotateImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
+        clipView.image = rotateImage
     }
     
     func onClickStopButton(sender: UIButton){
