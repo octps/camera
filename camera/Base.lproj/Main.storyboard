@@ -53,6 +53,17 @@
                                     <constraint firstAttribute="height" constant="50" id="vlr-wC-G5e"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4u3-a9-zMi">
+                                <rect key="frame" x="275" y="542" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="FTZ-rL-t87"/>
+                                    <constraint firstAttribute="height" constant="50" id="RZa-wh-h9H"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="ClickStartClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b0h-pW-Rgr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -60,13 +71,16 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2hG-UA-v8L" secondAttribute="bottom" id="BJp-FK-jBl"/>
                             <constraint firstItem="Imn-A2-1rm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BQ5-JT-f0k"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="10" id="DpH-Up-8Mh"/>
+                            <constraint firstItem="4u3-a9-zMi" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="EqU-cw-sMm"/>
                             <constraint firstItem="Imn-A2-1rm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ez7-tI-vW6"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="O5c-3M-fdt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="20" id="The-rk-6iz"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UUy-vH-rpL"/>
+                            <constraint firstItem="4u3-a9-zMi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yf5-IU-Cl0"/>
                             <constraint firstItem="A0r-zY-afq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b6b-XV-B9n"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="27" id="dEJ-D0-MRH"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="125" id="epM-jc-so2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4u3-a9-zMi" secondAttribute="bottom" constant="8" id="iA2-PW-DDf"/>
                             <constraint firstItem="pr7-zY-z1Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pat-pr-ULg"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="8" symbolic="YES" id="t4e-wn-mzM"/>
                             <constraint firstItem="pr7-zY-z1Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xz5-tW-jDA"/>
@@ -78,10 +92,12 @@
                                 <exclude reference="DpH-Up-8Mh"/>
                                 <exclude reference="The-rk-6iz"/>
                                 <exclude reference="BQ5-JT-f0k"/>
+                                <exclude reference="EqU-cw-sMm"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="clipButton" destination="4u3-a9-zMi" id="vth-Or-w6Q"/>
                         <outlet property="clipView" destination="Imn-A2-1rm" id="8Z9-eo-0sW"/>
                         <outlet property="recordButton" destination="yCE-2w-3Zj" id="nMJ-JB-574"/>
                         <outlet property="stateLabel" destination="A0r-zY-afq" id="zr3-JS-6Xb"/>

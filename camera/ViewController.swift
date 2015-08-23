@@ -25,6 +25,11 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     @IBOutlet weak var stateLabel: UILabel!
         
     @IBOutlet weak var clipView: UIImageView!
+    @IBOutlet weak var clipButton: UIButton!
+    
+    @IBAction func ClickStartClipButton(sender: AnyObject) {
+        onClickStartClipButton(sender as! UIButton)
+    }
     
     let captureSession = AVCaptureSession()
     var previewLayer : AVCaptureVideoPreviewLayer?
@@ -149,6 +154,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             recordButton.setTitle("start", forState: UIControlState.Normal)
             
         }
+    }
+    
+    func onClickStartClipButton(sender: UIButton){
+        print("clipButton")
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
