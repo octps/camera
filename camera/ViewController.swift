@@ -37,6 +37,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
     var isLooping = false
+    var isClipPlaying = false
     
     var playerItem : AVPlayerItem!
     var videoPlayer : AVPlayer!
@@ -158,8 +159,50 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func onClickStartClipButton(sender: UIButton){
         print("clipButton")
+        showMovie()
+        
     }
     
+    func showMovie() {
+        if (isClipPlaying == false) {
+            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            let documentsDirectory = paths[0] as String
+            let filePath : String? = "\(documentsDirectory)/temp.mp4"
+            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+
+            let avAsset = AVURLAsset(URL: fileURL, options: nil)
+
+            playerItem = AVPlayerItem(asset: avAsset)
+            videoPlayer = AVPlayer(playerItem: playerItem)
+            let videoPlayerView = AVPlayerView(frame: self.view.bounds)
+            
+            myLayer = videoPlayerView.layer as! AVPlayerLayer
+            myLayer.videoGravity = AVLayerVideoGravityResizeAspect
+            myLayer.player = videoPlayer
+
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(myLayer!, atIndex:1)
+            myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+        }
+        startMovie()
+    }
+
+    func startMovie() {
+        /* 動画の終了を監視 */
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
+            name: AVPlayerItemDidPlayToEndTimeNotification,
+            object: self.playerItem)
+        isClipPlaying = true
+        videoPlayer.seekToTime(kCMTimeZero)
+        videoPlayer.play()
+    }
+
+    func playerDidPlayToEndTime(notification: NSNotification) {
+        isClipPlaying = false
+        myLayer?.removeFromSuperlayer()
+    }
+
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
     }
     
