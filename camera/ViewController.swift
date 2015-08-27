@@ -121,17 +121,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             stateLabel.text = "recording"
             recordButton.setTitle("stop", forState: UIControlState.Normal)
         }
-//        if (!isRecording && isLooping) {
-//            myLayer?.removeFromSuperlayer()
-//            //bigin camera
-//            captureSession.startRunning()
-//
-//            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-//            let sereenWidth = self.view.bounds.width
-//            let sereenHeight = (self.view.bounds.height) + 90
-//            self.view.layer.insertSublayer(previewLayer!, atIndex:0)
-//            previewLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
-//        }
     }
     
     func makeImageFromVideo(fileURL: NSURL) {
@@ -153,14 +142,11 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             isRecording = false
             stateLabel.text = ""
             recordButton.setTitle("start", forState: UIControlState.Normal)
-            
         }
     }
     
     func onClickStartClipButton(sender: UIButton){
-        print("clipButton")
         showMovie()
-        
     }
     
     func showMovie() {
@@ -208,71 +194,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         
-//        // カメラとのセッションを削除
-//        self.captureSession.stopRunning()
-//        //        for output in self.captureSession.outputs {
-//        //            self.captureSession.removeOutput(output as! AVCaptureOutput)
-//        //        }
-//        //
-//        //        for input in self.captureSession.inputs {
-//        //            self.captureSession.removeInput(input as! AVCaptureInput)
-//        //        }
-//        ////        self.captureSession = nil
-//        ////        self.device = nil
-//        
-//        // showVideo
-//        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-//        let documentsDirectory = paths[0] as String
-//        let filePath : String? = "\(documentsDirectory)/temp.mp4"
-//        let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-//        
-//        previewLayer?.removeFromSuperlayer()
-//        
-//        let avAsset = AVURLAsset(URL: fileURL, options: nil)
-//        
-//        playerItem = AVPlayerItem(asset: avAsset)
-//        videoPlayer = AVPlayer(playerItem: playerItem)
-//        let videoPlayerView = AVPlayerView(frame: self.view.bounds)
-//        
-//        myLayer = videoPlayerView.layer as! AVPlayerLayer
-//        myLayer.videoGravity = AVLayerVideoGravityResizeAspect
-//        myLayer.player = videoPlayer
-//        
-//        let sereenWidth = self.view.bounds.width
-//        let sereenHeight = (self.view.bounds.height) + 90
-//        self.view.layer.insertSublayer(myLayer!, atIndex:0)
-//        myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
-//        
-//        startMovie()
-//        
-        //wirte video
         makeImageFromVideo(outputFileURL)
         
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
         
     }
-    
-//    func startMovie() {
-//        /* 動画の終了を監視 */
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
-//            name: AVPlayerItemDidPlayToEndTimeNotification,
-//            object: self.playerItem)
-//        videoPlayer.seekToTime(kCMTimeZero)
-//        //        videoPlayer.seekToTime(CMTimeMakeWithSeconds(0, Int32(NSEC_PER_SEC)))
-//        videoPlayer.play()
-//        recordButton.setTitle("return camera", forState: UIControlState.Normal)
-//        isLooping = true
-//    }
-//    
-//    func playerDidPlayToEndTime(notification: NSNotification) {
-//        repeatMovie()
-//    }
-//    
-//    func repeatMovie() {
-//        videoPlayer.seekToTime(kCMTimeZero)
-//        videoPlayer.play()
-//    }
     
 }
 
