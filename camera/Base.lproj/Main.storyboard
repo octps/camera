@@ -64,6 +64,13 @@
                                     <action selector="ClickStartClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b0h-pW-Rgr"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mxa-il-b8u">
+                                <rect key="frame" x="20" y="20" width="62" height="30"/>
+                                <state key="normal" title="clear clip"/>
+                                <connections>
+                                    <action selector="clearClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jvf-Bu-JrM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -77,9 +84,11 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="20" id="The-rk-6iz"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UUy-vH-rpL"/>
                             <constraint firstItem="4u3-a9-zMi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yf5-IU-Cl0"/>
+                            <constraint firstItem="Mxa-il-b8u" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ZmI-yi-Tyj"/>
                             <constraint firstItem="A0r-zY-afq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b6b-XV-B9n"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="27" id="dEJ-D0-MRH"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="125" id="epM-jc-so2"/>
+                            <constraint firstItem="Mxa-il-b8u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="fyR-Ff-kzt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4u3-a9-zMi" secondAttribute="bottom" constant="8" id="iA2-PW-DDf"/>
                             <constraint firstItem="pr7-zY-z1Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pat-pr-ULg"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="8" symbolic="YES" id="t4e-wn-mzM"/>
@@ -91,8 +100,8 @@
                                 <exclude reference="t4e-wn-mzM"/>
                                 <exclude reference="DpH-Up-8Mh"/>
                                 <exclude reference="The-rk-6iz"/>
-                                <exclude reference="BQ5-JT-f0k"/>
                                 <exclude reference="EqU-cw-sMm"/>
+                                <exclude reference="BQ5-JT-f0k"/>
                             </mask>
                         </variation>
                     </view>

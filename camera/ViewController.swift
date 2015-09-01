@@ -30,6 +30,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     @IBAction func ClickStartClipButton(sender: AnyObject) {
         onClickStartClipButton(sender as! UIButton)
     }
+    @IBAction func clearClipButton(sender: AnyObject) {
+        onClickClearClipButton(sender as! UIButton)
+    }
     
     let captureSession = AVCaptureSession()
     var previewLayer : AVCaptureVideoPreviewLayer?
@@ -150,18 +153,26 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         let filePath : String? = "\(documentsDirectory)/temp.mp4"
         
         if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
-            showMovie()
+            showMovie(filePath)
         }
         else {
-            /* デフォルトの動画を表示 */
+            let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+            showMovie(filePath)
         }
     }
     
-    func showMovie() {
+    func onClickClearClipButton(sender: UIButton) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+            try! NSFileManager.defaultManager().removeItemAtPath(filePath!)
+        }
+    }
+    
+    func showMovie(filePath : String?) {
         if (isClipPlaying == false) {
-            let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-            let documentsDirectory = paths[0] as String
-            let filePath : String? = "\(documentsDirectory)/temp.mp4"
             let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
 
             let avAsset = AVURLAsset(URL: fileURL, options: nil)
