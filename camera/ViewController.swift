@@ -36,7 +36,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var captureDevice : AVCaptureDevice?
     let fileOutput = AVCaptureMovieFileOutput()
     var isRecording = false
-    var isLooping = false
     var isClipPlaying = false
     
     var playerItem : AVPlayerItem!
@@ -101,7 +100,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func onClickStartButton(sender: UIButton){
-        if (!isRecording && !isLooping) {
+        if (!isRecording) {
             // start recording
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             let documentsDirectory = paths[0] as String
@@ -146,7 +145,16 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func onClickStartClipButton(sender: UIButton){
-        showMovie()
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+        
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+            showMovie()
+        }
+        else {
+            /* デフォルトの動画を表示 */
+        }
     }
     
     func showMovie() {
