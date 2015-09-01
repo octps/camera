@@ -62,6 +62,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             }
         }
         stateLabel.text = ""
+        showDefalutImage()
     }
     
     //カメラ設定
@@ -124,6 +125,22 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             recordButton.setTitle("stop", forState: UIControlState.Normal)
         }
     }
+
+    func showDefalutImage(){
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+        
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+            makeImageFromVideo(fileURL)
+        }
+        else {
+            let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+            makeImageFromVideo(fileURL)
+        }
+    }
     
     func makeImageFromVideo(fileURL: NSURL) {
         let avAsset = AVURLAsset(URL: fileURL, options: nil)
@@ -169,6 +186,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
             try! NSFileManager.defaultManager().removeItemAtPath(filePath!)
         }
+        showDefalutImage()
     }
     
     func showMovie(filePath : String?) {
