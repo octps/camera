@@ -27,6 +27,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     @IBOutlet weak var clipView: UIImageView!
     @IBOutlet weak var clipButton: UIButton!
     
+    @IBOutlet weak var clipView1: UIImageView!
+    @IBOutlet weak var clipView3: UIImageView!
+    
     @IBAction func ClickStartClipButton(sender: AnyObject) {
         onClickStartClipButton(sender as! UIButton)
     }
@@ -133,16 +136,24 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
             let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-            makeImageFromVideo(fileURL)
+            makeImageFromVideo(fileURL, id: 2)
         }
         else {
-            let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
-            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-            makeImageFromVideo(fileURL)
+            let filePath1 = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+            let fileURL1 : NSURL = NSURL(fileURLWithPath: filePath1!)
+            makeImageFromVideo(fileURL1, id: 1)
+            
+            let filePath2 = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
+            let fileURL2 : NSURL = NSURL(fileURLWithPath: filePath2!)
+            makeImageFromVideo(fileURL2, id: 2)
+
+            let filePath3 = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
+            let fileURL3 : NSURL = NSURL(fileURLWithPath: filePath3!)
+            makeImageFromVideo(fileURL3, id: 3)
         }
     }
     
-    func makeImageFromVideo(fileURL: NSURL) {
+    func makeImageFromVideo(fileURL: NSURL, id:Int) {
         let avAsset = AVURLAsset(URL: fileURL, options: nil)
         
         // assetから画像をキャプチャーする為のジュネレーターを生成.
@@ -152,8 +163,18 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         // 静止画用のImageViewを生成.
         let image =  UIImage(CGImage: try! generator.copyCGImageAtTime(avAsset.duration, actualTime: nil))
         let rotateImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: UIImageOrientation.Right)
-        clipView.image = rotateImage
+        if (id == 1) {
+            clipView1.image = rotateImage
+        }
+        if (id == 2) {
+            clipView.image = rotateImage
+        }
+        if (id == 3) {
+            clipView3.image = rotateImage
+        }
+
     }
+    
     
     func onClickStopButton(sender: UIButton){
         if isRecording {
@@ -165,6 +186,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func onClickStartClipButton(sender: UIButton){
+        print(sender.tag)
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as String
         let filePath : String? = "\(documentsDirectory)/temp.mp4"
@@ -173,8 +195,18 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             showMovie(filePath)
         }
         else {
-            let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
-            showMovie(filePath)
+            if (sender.tag == 1) {
+                let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+                showMovie(filePath)
+            }
+            if (sender.tag == 2) {
+                let filePath = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
+                showMovie(filePath)
+            }
+            if (sender.tag == 3) {
+                let filePath = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
+                showMovie(filePath)
+            }
         }
     }
     
@@ -231,7 +263,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         
-        makeImageFromVideo(outputFileURL)
+        makeImageFromVideo(outputFileURL, id:1)
         
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)

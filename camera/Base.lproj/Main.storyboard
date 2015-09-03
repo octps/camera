@@ -39,13 +39,6 @@
                                     <action selector="ClickStopButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I7J-LC-L5l"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pr7-zY-z1Q">
-                                <rect key="frame" x="333" y="542" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="3kF-TD-Zuh"/>
-                                    <constraint firstAttribute="width" constant="50" id="WOh-Ud-2Oy"/>
-                                </constraints>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Imn-A2-1rm">
                                 <rect key="frame" x="275" y="542" width="50" height="50"/>
                                 <constraints>
@@ -53,7 +46,7 @@
                                     <constraint firstAttribute="height" constant="50" id="vlr-wC-G5e"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4u3-a9-zMi">
+                            <button opaque="NO" alpha="0.59999999999999998" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4u3-a9-zMi">
                                 <rect key="frame" x="275" y="542" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -71,16 +64,58 @@
                                     <action selector="clearClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jvf-Bu-JrM"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OzF-Xj-mWj">
+                                <rect key="frame" x="165" y="542" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Vlf-ci-usq"/>
+                                    <constraint firstAttribute="height" constant="50" id="wbC-rd-BB6"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" alpha="0.60000002384185791" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PTY-E7-Swc">
+                                <rect key="frame" x="165" y="542" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="fHg-W8-9Cq"/>
+                                    <constraint firstAttribute="width" constant="50" id="u5L-c3-uBj"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="ClickStartClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oUJ-CT-9sS"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QbE-vj-J2d">
+                                <rect key="frame" x="385" y="542" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2km-YM-e0G"/>
+                                    <constraint firstAttribute="width" constant="50" id="5Q4-rS-sqE"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" alpha="0.60000002384185791" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11Z-oM-BxB">
+                                <rect key="frame" x="385" y="542" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="WQ6-sb-Pqq"/>
+                                    <constraint firstAttribute="width" constant="50" id="wRQ-cI-ajk"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="ClickStartClipButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhJ-Fj-huK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="2hG-UA-v8L" secondAttribute="trailing" constant="-20" id="2qt-Hh-PKn"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="QbE-vj-J2d" secondAttribute="bottom" constant="8" id="5hA-uH-Fuj"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="11Z-oM-BxB" secondAttribute="bottom" constant="8" id="6O9-Fs-Ei2"/>
+                            <constraint firstItem="QbE-vj-J2d" firstAttribute="leading" secondItem="4u3-a9-zMi" secondAttribute="trailing" constant="60" id="9ZW-Ce-HtP"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2hG-UA-v8L" secondAttribute="bottom" id="BJp-FK-jBl"/>
                             <constraint firstItem="Imn-A2-1rm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BQ5-JT-f0k"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="10" id="DpH-Up-8Mh"/>
                             <constraint firstItem="4u3-a9-zMi" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="EqU-cw-sMm"/>
                             <constraint firstItem="Imn-A2-1rm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ez7-tI-vW6"/>
+                            <constraint firstItem="4u3-a9-zMi" firstAttribute="leading" secondItem="PTY-E7-Swc" secondAttribute="trailing" constant="60" id="Fv2-Wi-fw6"/>
+                            <constraint firstItem="11Z-oM-BxB" firstAttribute="leading" secondItem="4u3-a9-zMi" secondAttribute="trailing" constant="60" id="IWX-Pe-NXi"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="O5c-3M-fdt"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="PTY-E7-Swc" secondAttribute="bottom" constant="8" id="Sjs-UA-bDz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="20" id="The-rk-6iz"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UUy-vH-rpL"/>
                             <constraint firstItem="4u3-a9-zMi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yf5-IU-Cl0"/>
@@ -88,11 +123,11 @@
                             <constraint firstItem="A0r-zY-afq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b6b-XV-B9n"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="yCE-2w-3Zj" secondAttribute="bottom" constant="27" id="dEJ-D0-MRH"/>
                             <constraint firstItem="yCE-2w-3Zj" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="125" id="epM-jc-so2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="OzF-Xj-mWj" secondAttribute="bottom" constant="8" id="fHe-1m-83i"/>
                             <constraint firstItem="Mxa-il-b8u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="fyR-Ff-kzt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4u3-a9-zMi" secondAttribute="bottom" constant="8" id="iA2-PW-DDf"/>
-                            <constraint firstItem="pr7-zY-z1Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pat-pr-ULg"/>
+                            <constraint firstItem="4u3-a9-zMi" firstAttribute="leading" secondItem="OzF-Xj-mWj" secondAttribute="trailing" constant="60" id="oSo-6l-Gh9"/>
                             <constraint firstItem="2hG-UA-v8L" firstAttribute="top" secondItem="A0r-zY-afq" secondAttribute="bottom" constant="8" symbolic="YES" id="t4e-wn-mzM"/>
-                            <constraint firstItem="pr7-zY-z1Q" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xz5-tW-jDA"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Imn-A2-1rm" secondAttribute="bottom" constant="8" id="yIq-6z-E6H"/>
                         </constraints>
                         <variation key="default">
@@ -108,6 +143,8 @@
                     <connections>
                         <outlet property="clipButton" destination="4u3-a9-zMi" id="vth-Or-w6Q"/>
                         <outlet property="clipView" destination="Imn-A2-1rm" id="8Z9-eo-0sW"/>
+                        <outlet property="clipView1" destination="OzF-Xj-mWj" id="pEr-ui-wb9"/>
+                        <outlet property="clipView3" destination="QbE-vj-J2d" id="lxw-Xg-cfe"/>
                         <outlet property="recordButton" destination="yCE-2w-3Zj" id="nMJ-JB-574"/>
                         <outlet property="stateLabel" destination="A0r-zY-afq" id="zr3-JS-6Xb"/>
                     </connections>
