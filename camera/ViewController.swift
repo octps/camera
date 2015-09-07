@@ -192,20 +192,20 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         let filePath : String? = "\(documentsDirectory)/temp.mp4"
         
         if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
-            showMovie(filePath)
+            selectMovie(filePath)
         }
         else {
             if (sender.tag == 1) {
                 let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
-                showMovie(filePath)
+                selectMovie(filePath)
             }
             if (sender.tag == 2) {
                 let filePath = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
-                showMovie(filePath)
+                selectMovie(filePath)
             }
             if (sender.tag == 3) {
                 let filePath = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
-                showMovie(filePath)
+                selectMovie(filePath)
             }
         }
     }
@@ -221,14 +221,24 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         showDefalutImage()
     }
     
-    func showMovie(filePath : String?) {
+    func selectMovie(filePath : String?) {
+        let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+        
+        let avAsset = AVURLAsset(URL: fileURL, options: nil)
+        
+        playerItem = AVPlayerItem(asset: avAsset)
+        videoPlayer = AVPlayer(playerItem: playerItem)
+        showMovie(videoPlayer)
+    }
+    
+    func showMovie(videoPlayer : AVPlayer?) {
         if (isClipPlaying == false) {
-            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-
-            let avAsset = AVURLAsset(URL: fileURL, options: nil)
-
-            playerItem = AVPlayerItem(asset: avAsset)
-            videoPlayer = AVPlayer(playerItem: playerItem)
+//            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+//
+//            let avAsset = AVURLAsset(URL: fileURL, options: nil)
+//
+//            playerItem = AVPlayerItem(asset: avAsset)
+//            videoPlayer = AVPlayer(playerItem: playerItem)
             let videoPlayerView = AVPlayerView(frame: self.view.bounds)
             
             myLayer = videoPlayerView.layer as! AVPlayerLayer
@@ -240,6 +250,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             self.view.layer.insertSublayer(myLayer!, atIndex:1)
             myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
         }
+        myLayer.player = videoPlayer
         startMovie()
     }
 
