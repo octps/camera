@@ -227,8 +227,9 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         let avAsset = AVURLAsset(URL: fileURL, options: nil)
         
         playerItem = AVPlayerItem(asset: avAsset)
+        playerItem.addObserver(self, forKeyPath: "status", options: .New , context: nil)
         videoPlayer = AVPlayer(playerItem: playerItem)
-        showMovie(videoPlayer)
+//        showMovie(videoPlayer)
     }
     
     func showMovie(videoPlayer : AVPlayer?) {
@@ -278,7 +279,51 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
-        
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?,
+        ofObject object: AnyObject?,
+        change: [String : AnyObject]?,
+        context: UnsafeMutablePointer<Void>) {
+
+        if keyPath == "status" {
+            let status : AVPlayerItemStatus = self.playerItem.status as AVPlayerItemStatus
+            if status == .ReadyToPlay {
+                showMovie(videoPlayer)
+            }
+            else if status == .Failed {
+                print("Failed")
+            }
+            else if status == .Unknown {
+                print("Unknown")
+            }
+        }
+
+            
+//            if keyPath == "status" {
+//                let status : AVPlayerItemStatus = self.playerItem.status as AVPlayerItemStatus
+//                
+//                if status == .ReadyToPlay {
+//                    // 再生準備完了
+//                    NSLog("ReadyToPlay")
+//                    // playerのセット
+//                    print("me")
+////                    self.playerView.player = self.player
+////                    self.playerView.setVideoFillMode(AVLayerVideoGravityResizeAspectFill)
+//                }
+//                else if status == .Failed {
+//                    NSLog("Failed")
+//                }
+//                else if status == .Unknown {
+//                    NSLog("Unknown")
+//                }
+//            }
+//            else {
+//                super.observeValueForKeyPath(keyPath,
+//                    ofObject: object,
+//                    change: change,
+//                    context: context)
+//            }
     }
     
 }
