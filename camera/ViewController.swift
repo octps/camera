@@ -44,9 +44,22 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var isRecording = false
     var isClipPlaying = false
     
-    var playerItem : AVPlayerItem!
-    var videoPlayer : AVPlayer!
-    var myLayer : AVPlayerLayer!
+    var playerItem1 : AVPlayerItem!
+    var playerItem2 : AVPlayerItem!
+    var playerItem3 : AVPlayerItem!
+    
+    var videoPlayer1 : AVPlayer!
+    var videoPlayer2 : AVPlayer!
+    var videoPlayer3 : AVPlayer!
+    
+    var myLayer1 : AVPlayerLayer!
+    var myLayer2 : AVPlayerLayer!
+    var myLayer3 : AVPlayerLayer!
+    
+    var videoPlayerView1 : AVPlayerView!
+    var videoPlayerView2 : AVPlayerView!
+    var videoPlayerView3 : AVPlayerView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +79,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
         stateLabel.text = ""
         showDefalutImage()
+        setDefaultMovie()
     }
     
     //カメラ設定
@@ -185,30 +199,143 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
     }
     
-    func onClickStartClipButton(sender: UIButton){
-        print(sender.tag)
+    func setDefaultMovie() {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as String
         let filePath : String? = "\(documentsDirectory)/temp.mp4"
         
         if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
-            showMovie(filePath)
+            setDefaultAsset(filePath!, id:2)
         }
         else {
-            if (sender.tag == 1) {
-                let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
-                showMovie(filePath)
-            }
-            if (sender.tag == 2) {
-                let filePath = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
-                showMovie(filePath)
-            }
-            if (sender.tag == 3) {
-                let filePath = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
-                showMovie(filePath)
-            }
+            let filePath1 = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+            setDefaultAsset(filePath1!, id:1)
+            let filePath2 = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
+            setDefaultAsset(filePath2!, id:2)
+            let filePath3 = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
+            setDefaultAsset(filePath3!, id:3)
         }
     }
+    
+    func setDefaultAsset(filePath: String, id:Int){
+        let fileURL : NSURL = NSURL(fileURLWithPath: filePath)
+        let avAsset = AVURLAsset(URL: fileURL, options: nil)
+        
+        if (id == 1) {
+            print(1)
+            playerItem1 = AVPlayerItem(asset: avAsset)
+            videoPlayer1 = AVPlayer(playerItem: playerItem1)
+            videoPlayerView1 = AVPlayerView(frame: self.view.bounds)
+            
+            myLayer1 = videoPlayerView1.layer as! AVPlayerLayer
+            myLayer1.videoGravity = AVLayerVideoGravityResizeAspect
+            myLayer1.player = videoPlayer1
+            
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(myLayer1!, atIndex:2)
+            myLayer1?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+            self.view.sendSubviewToBack(videoPlayerView1)
+        }
+        if (id == 2) {
+            print(2)
+            playerItem2 = AVPlayerItem(asset: avAsset)
+            videoPlayer2 = AVPlayer(playerItem: playerItem2)
+            videoPlayerView2 = AVPlayerView(frame: self.view.bounds)
+            
+            myLayer2 = videoPlayerView2.layer as! AVPlayerLayer
+            myLayer2.videoGravity = AVLayerVideoGravityResizeAspect
+            myLayer2.player = videoPlayer2
+            
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(myLayer2!, atIndex:3)
+            myLayer2?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+            self.view.sendSubviewToBack(videoPlayerView2)
+        }
+        if (id == 3) {
+            print(3)
+            playerItem3 = AVPlayerItem(asset: avAsset)
+            videoPlayer3 = AVPlayer(playerItem: playerItem3)
+            videoPlayerView3 = AVPlayerView(frame: self.view.bounds)
+            
+            myLayer3 = videoPlayerView3.layer as! AVPlayerLayer
+            myLayer3.videoGravity = AVLayerVideoGravityResizeAspect
+            myLayer3.player = videoPlayer3
+            
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(myLayer3!, atIndex:4)
+            myLayer3?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+            self.view.sendSubviewToBack(videoPlayerView3)
+        }
+    }
+    
+    func onClickStartClipButton(sender: UIButton){
+        if (sender.tag == 1) {
+            self.view.layer.insertSublayer(myLayer1!, atIndex:4)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime1:",
+                name: AVPlayerItemDidPlayToEndTimeNotification,
+                object: self.playerItem1)
+            videoPlayer1.seekToTime(kCMTimeZero)
+            videoPlayer1.play()
+
+        }
+        if (sender.tag == 2) {
+            self.view.layer.insertSublayer(myLayer2!, atIndex:4)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime2:",
+                name: AVPlayerItemDidPlayToEndTimeNotification,
+                object: self.playerItem2)
+            videoPlayer2.seekToTime(kCMTimeZero)
+            videoPlayer2.play()
+
+        }
+        if (sender.tag == 3) {
+            self.view.layer.insertSublayer(myLayer3!, atIndex:4)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime3:",
+                name: AVPlayerItemDidPlayToEndTimeNotification,
+                object: self.playerItem3)
+            videoPlayer3.seekToTime(kCMTimeZero)
+            videoPlayer3.play()
+        }
+    }
+    
+    func playerDidPlayToEndTime1(notification: NSNotification) {
+        self.view.sendSubviewToBack(videoPlayerView1)
+    }
+    
+    func playerDidPlayToEndTime2(notification: NSNotification) {
+        self.view.sendSubviewToBack(videoPlayerView2)
+    }
+    
+    func playerDidPlayToEndTime3(notification: NSNotification) {
+        self.view.sendSubviewToBack(videoPlayerView3)
+    }
+
+        
+
+//        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+//        let documentsDirectory = paths[0] as String
+//        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+//        
+//        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+//            showMovie(filePath)
+//        }
+//        else {
+//            if (sender.tag == 1) {
+//                let filePath = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+//                showMovie(filePath)
+//            }
+//            if (sender.tag == 2) {
+//                let filePath = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
+//                showMovie(filePath)
+//            }
+//            if (sender.tag == 3) {
+//                let filePath = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
+//                showMovie(filePath)
+//            }
+//        }
+//    }
     
     func onClickClearClipButton(sender: UIButton) {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
@@ -221,42 +348,42 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         showDefalutImage()
     }
     
-    func showMovie(filePath : String?) {
-        if (isClipPlaying == false) {
-            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-
-            let avAsset = AVURLAsset(URL: fileURL, options: nil)
-
-            playerItem = AVPlayerItem(asset: avAsset)
-            videoPlayer = AVPlayer(playerItem: playerItem)
-            let videoPlayerView = AVPlayerView(frame: self.view.bounds)
-            
-            myLayer = videoPlayerView.layer as! AVPlayerLayer
-            myLayer.videoGravity = AVLayerVideoGravityResizeAspect
-            myLayer.player = videoPlayer
-
-            let sereenWidth = self.view.bounds.width
-            let sereenHeight = (self.view.bounds.height) + 90
-            self.view.layer.insertSublayer(myLayer!, atIndex:1)
-            myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
-        }
-        startMovie()
-    }
-
-    func startMovie() {
-        /* 動画の終了を監視 */
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
-            name: AVPlayerItemDidPlayToEndTimeNotification,
-            object: self.playerItem)
-        isClipPlaying = true
-        videoPlayer.seekToTime(kCMTimeZero)
-        videoPlayer.play()
-    }
-
-    func playerDidPlayToEndTime(notification: NSNotification) {
-        isClipPlaying = false
-        myLayer?.removeFromSuperlayer()
-    }
+//    func showMovie(filePath : String?) {
+//        if (isClipPlaying == false) {
+//            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
+//
+//            let avAsset = AVURLAsset(URL: fileURL, options: nil)
+//
+//            playerItem = AVPlayerItem(asset: avAsset)
+//            videoPlayer = AVPlayer(playerItem: playerItem)
+//            let videoPlayerView = AVPlayerView(frame: self.view.bounds)
+//            
+//            myLayer = videoPlayerView.layer as! AVPlayerLayer
+//            myLayer.videoGravity = AVLayerVideoGravityResizeAspect
+//            myLayer.player = videoPlayer
+//
+//            let sereenWidth = self.view.bounds.width
+//            let sereenHeight = (self.view.bounds.height) + 90
+//            self.view.layer.insertSublayer(myLayer!, atIndex:1)
+//            myLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+//        }
+//        startMovie()
+//    }
+//
+//    func startMovie() {
+//        /* 動画の終了を監視 */
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidPlayToEndTime:",
+//            name: AVPlayerItemDidPlayToEndTimeNotification,
+//            object: self.playerItem)
+//        isClipPlaying = true
+//        videoPlayer.seekToTime(kCMTimeZero)
+//        videoPlayer.play()
+//    }
+//
+//    func playerDidPlayToEndTime(notification: NSNotification) {
+//        isClipPlaying = false
+//        myLayer?.removeFromSuperlayer()
+//    }
 
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
     }
