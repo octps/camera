@@ -135,7 +135,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             }
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             let documentsDirectory = paths[0] as String
-                        
+            
             if (movieNumber == 1) {
                 filePath = "\(documentsDirectory)/temp1.mp4"
                 if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
@@ -168,7 +168,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                     }
                 }
             }
-            print(filePath)
             let fileURL : NSURL = NSURL(fileURLWithPath: filePath)
             fileOutput.startRecordingToOutputFileURL(fileURL, recordingDelegate: self)
             
@@ -427,14 +426,32 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
         if (movieNumber == 1) {
             makeImageFromVideo(outputFileURL, id:1)
+            
+//            let avAsset = AVURLAsset(URL: outputFileURL, options: nil)
+//            playerItem1 = AVPlayerItem(asset: avAsset)
+//            videoPlayer1 = AVPlayer(playerItem: playerItem1)
+//            videoPlayerView1 = AVPlayerView(frame: self.view.bounds)
+//            myLayer1 = videoPlayerView1.layer as! AVPlayerLayer
         }
 
         if (movieNumber == 2) {
             makeImageFromVideo(outputFileURL, id: 2)
+            
+//            let avAsset = AVURLAsset(URL: outputFileURL, options: nil)
+//            playerItem2 = AVPlayerItem(asset: avAsset)
+//            videoPlayer2 = AVPlayer(playerItem: playerItem2)
+//            videoPlayerView2 = AVPlayerView(frame: self.view.bounds)
+//            myLayer2 = videoPlayerView2.layer as! AVPlayerLayer
         }
 
         if (movieNumber == 3) {
             makeImageFromVideo(outputFileURL, id:3)
+            
+//            let avAsset = AVURLAsset(URL: outputFileURL, options: nil)
+//            playerItem3 = AVPlayerItem(asset: avAsset)
+//            videoPlayer3 = AVPlayer(playerItem: playerItem3)
+//            videoPlayerView3 = AVPlayerView(frame: self.view.bounds)
+//            myLayer3 = videoPlayerView3.layer as! AVPlayerLayer
         }
 
         let assetsLib = ALAssetsLibrary()
