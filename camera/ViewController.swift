@@ -59,6 +59,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var videoPlayerView1 : AVPlayerView!
     var videoPlayerView2 : AVPlayerView!
     var videoPlayerView3 : AVPlayerView!
+    
+    var movieNumber : Int!
+    
+    var filePath : String!
 
     
     override func viewDidLoad() {
@@ -78,6 +82,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             }
         }
         stateLabel.text = ""
+        movieNumber = 0
         showDefalutImage()
         setDefaultMovie()
     }
@@ -120,21 +125,51 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         captureSession.startRunning()
     }
     
-    func onClickStartButton(sender: UIButton){
+    func onClickStartButton(sender: UIButton) {
         if (!isRecording) {
             // start recording
+            
+            movieNumber = movieNumber + 1
+            if (movieNumber == 4) {
+                movieNumber = 1
+            }
             let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
             let documentsDirectory = paths[0] as String
-            let filePath : String? = "\(documentsDirectory)/temp.mp4"
-            let fileURL : NSURL = NSURL(fileURLWithPath: filePath!)
-            
-            if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
-                do {
-                    try NSFileManager.defaultManager().removeItemAtPath(filePath!)
-                } catch {
-                    print("error")
+                        
+            if (movieNumber == 1) {
+                filePath = "\(documentsDirectory)/temp1.mp4"
+                if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(filePath!)
+                    } catch {
+                        print("error")
+                    }
                 }
             }
+            
+            if (movieNumber == 2) {
+                filePath = "\(documentsDirectory)/temp2.mp4"
+                if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(filePath!)
+                    } catch {
+                        print("error")
+                    }
+                }
+            }
+            
+            if (movieNumber == 3) {
+                filePath = "\(documentsDirectory)/temp3.mp4"
+                if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(filePath!)
+                    } catch {
+                        print("error")
+                    }
+                }
+            }
+            print(filePath)
+            let fileURL : NSURL = NSURL(fileURLWithPath: filePath)
             fileOutput.startRecordingToOutputFileURL(fileURL, recordingDelegate: self)
             
             isRecording = true
@@ -389,9 +424,19 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        
-        makeImageFromVideo(outputFileURL, id:1)
-        
+
+        if (movieNumber == 1) {
+            makeImageFromVideo(outputFileURL, id:1)
+        }
+
+        if (movieNumber == 2) {
+            makeImageFromVideo(outputFileURL, id: 2)
+        }
+
+        if (movieNumber == 3) {
+            makeImageFromVideo(outputFileURL, id:3)
+        }
+
         let assetsLib = ALAssetsLibrary()
         assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
         
