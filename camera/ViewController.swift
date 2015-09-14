@@ -352,13 +352,52 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     func onClickClearClipButton(sender: UIButton) {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         let documentsDirectory = paths[0] as String
-        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+//        let filePath : String? = "\(documentsDirectory)/temp.mp4"
+        let filePath1 : String? = "\(documentsDirectory)/temp1.mp4"
+        let filePath2 : String? = "\(documentsDirectory)/temp2.mp4"
+        let filePath3 : String? = "\(documentsDirectory)/temp3.mp4"
 
-        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
-            try! NSFileManager.defaultManager().removeItemAtPath(filePath!)
+//        if (NSFileManager.defaultManager().fileExistsAtPath(filePath!)) {
+//            try! NSFileManager.defaultManager().removeItemAtPath(filePath!)
+//        }
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath1!)) {
+            try! NSFileManager.defaultManager().removeItemAtPath(filePath1!)
         }
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath2!)) {
+            try! NSFileManager.defaultManager().removeItemAtPath(filePath2!)
+        }
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath3!)) {
+            try! NSFileManager.defaultManager().removeItemAtPath(filePath3!)
+        }
+        
+        movieNumber = 0
         showDefalutImage()
+        returnDefaultMovie()
     }
+    
+    func returnDefaultMovie() {
+        let filePath1 = NSBundle.mainBundle().pathForResource("resource/1", ofType: "MOV")
+        let fileURL1 : NSURL = NSURL(fileURLWithPath: filePath1!)
+        let avAsset1 = AVURLAsset(URL: fileURL1, options: nil)
+        playerItem1 = AVPlayerItem(asset: avAsset1)
+        videoPlayer1 = AVPlayer(playerItem: playerItem1)
+        myLayer1.player = videoPlayer1
+        
+        let filePath2 = NSBundle.mainBundle().pathForResource("resource/2", ofType: "MOV")
+        let fileURL2 : NSURL = NSURL(fileURLWithPath: filePath2!)
+        let avAsset2 = AVURLAsset(URL: fileURL2, options: nil)
+        playerItem2 = AVPlayerItem(asset: avAsset2)
+        videoPlayer2 = AVPlayer(playerItem: playerItem2)
+        myLayer2.player = videoPlayer2
+
+        let filePath3 = NSBundle.mainBundle().pathForResource("resource/3", ofType: "MOV")
+        let fileURL3 : NSURL = NSURL(fileURLWithPath: filePath3!)
+        let avAsset3 = AVURLAsset(URL: fileURL3, options: nil)
+        playerItem3 = AVPlayerItem(asset: avAsset3)
+        videoPlayer3 = AVPlayer(playerItem: playerItem3)
+        myLayer3.player = videoPlayer3
+    }
+    
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
     }
