@@ -64,7 +64,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     var filePath : String!
 
-    
+    var AudioInput : AVCaptureDeviceInput!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -81,6 +82,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
                 }
             }
         }
+        
         stateLabel.text = ""
         movieNumber = 0
         showDefalutImage()
@@ -106,7 +108,16 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         configureDevice()
         let err : NSError? = nil
         do {
+            let captureDeviceAudio = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
+            
+            do {
+                AudioInput = try AVCaptureDeviceInput(device: captureDeviceAudio) as AVCaptureDeviceInput
+            } catch {
+                print("audioerror")
+            }
+
             try captureSession.addInput(AVCaptureDeviceInput(device: captureDevice))
+            captureSession.addInput(AudioInput)
             captureSession.addOutput(fileOutput)
         } catch {
             print(err)
