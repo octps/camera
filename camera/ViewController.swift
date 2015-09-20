@@ -448,10 +448,65 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             myLayer3.player = videoPlayer3
 
         }
+        
+        if (cameraLoopSwitchFlag == 1) {
+            let assetsLib = ALAssetsLibrary()
+            assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
+        }
 
 //        let assetsLib = ALAssetsLibrary()
 //        assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
         
+    }
+    
+    // camera loop switch
+    @IBOutlet weak var loopSwitch: UIButton!
+    var cameraLoopSwitchFlag = 0 // 0 = camera, 1 = loop
+    
+    @IBAction func cameraLoopSwitchStart(sender: AnyObject) {
+        cameraLoopSwitchFlag = cameraLoopSwitchFlag + 1
+        if (cameraLoopSwitchFlag == 2) {
+            cameraLoopSwitchFlag = 0
+        }
+        if (cameraLoopSwitchFlag == 1) {
+            startLoopRecording()
+        }
+        else {
+            backToCameraFromLoopRecording()
+        }
+    }
+    
+    func startLoopRecording() {
+        loopSwitch.setTitle("camera", forState: UIControlState.Normal)
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let documentsDirectory = paths[0] as String
+        let filePath = "\(documentsDirectory)/loop.mp4"
+        if (NSFileManager.defaultManager().fileExistsAtPath(filePath)) {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(filePath)
+            } catch {
+                print("error")
+            }
+        }
+        let fileURL : NSURL = NSURL(fileURLWithPath: filePath)
+        fileOutput.startRecordingToOutputFileURL(fileURL, recordingDelegate: self)
+        
+        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("stopLoopRecording"), userInfo: nil, repeats: false)
+        
+    }
+    
+    func stopLoopRecording() {
+        print("5sec")
+        fileOutput.stopRecording()
+    }
+    
+    
+    
+
+
+    
+    func backToCameraFromLoopRecording() {
+        loopSwitch.setTitle("loop", forState: UIControlState.Normal)
     }
     
 }
