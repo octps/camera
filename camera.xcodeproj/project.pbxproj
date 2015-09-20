@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ABB04AF01B9604B30025049E /* resource in Resources */ = {isa = PBXBuildFile; fileRef = ABB04AEF1B9604B30025049E /* resource */; };
+		ABB04AF11B9604B30025049E /* resource in Resources */ = {isa = PBXBuildFile; fileRef = ABB04AEF1B9604B30025049E /* resource */; };
+		ABB04AF21B9604B30025049E /* resource in Resources */ = {isa = PBXBuildFile; fileRef = ABB04AEF1B9604B30025049E /* resource */; };
 		ABF848F81B398A9A00EB40A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF848F71B398A9A00EB40A7 /* AppDelegate.swift */; };
 		ABF848FA1B398A9A00EB40A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF848F91B398A9A00EB40A7 /* ViewController.swift */; };
-		ABF848FD1B398A9A00EB40A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF848FB1B398A9A00EB40A7 /* Main.storyboard */; };
+		ABF848FD1B398A9A00EB40A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF848FB1B398A9A00EB40A7 /* Main.storyboard */; settings = {ASSET_TAGS = (second, ); }; };
 		ABF848FF1B398A9A00EB40A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABF848FE1B398A9A00EB40A7 /* Assets.xcassets */; };
 		ABF849021B398A9A00EB40A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF849001B398A9A00EB40A7 /* LaunchScreen.storyboard */; };
 		ABF8490D1B398A9A00EB40A7 /* cameraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8490C1B398A9A00EB40A7 /* cameraTests.swift */; };
@@ -34,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ABB04AEF1B9604B30025049E /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
 		ABF848F41B398A9A00EB40A7 /* camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF848F71B398A9A00EB40A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABF848F91B398A9A00EB40A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 				ABF848FE1B398A9A00EB40A7 /* Assets.xcassets */,
 				ABF849001B398A9A00EB40A7 /* LaunchScreen.storyboard */,
 				ABF849031B398A9A00EB40A7 /* Info.plist */,
+				ABB04AEF1B9604B30025049E /* resource */,
 			);
 			path = camera;
 			sourceTree = "<group>";
@@ -187,6 +192,11 @@
 		ABF848EC1B398A9A00EB40A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					2,
+					first,
+					second,
+				);
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = n001;
 				TargetAttributes = {
@@ -229,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB04AF01B9604B30025049E /* resource in Resources */,
 				ABF849021B398A9A00EB40A7 /* LaunchScreen.storyboard in Resources */,
 				ABF848FF1B398A9A00EB40A7 /* Assets.xcassets in Resources */,
 				ABF848FD1B398A9A00EB40A7 /* Main.storyboard in Resources */,
@@ -239,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB04AF11B9604B30025049E /* resource in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB04AF21B9604B30025049E /* resource in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
