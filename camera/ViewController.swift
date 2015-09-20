@@ -452,6 +452,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         if (cameraLoopSwitchFlag == 1) {
             let assetsLib = ALAssetsLibrary()
             assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
+            cameraLoopSwitchFlag = 0
         }
 
 //        let assetsLib = ALAssetsLibrary()
@@ -462,6 +463,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     // camera loop switch
     @IBOutlet weak var loopSwitch: UIButton!
     var cameraLoopSwitchFlag = 0 // 0 = camera, 1 = loop
+    var loopTimer : NSTimer!
     
     @IBAction func cameraLoopSwitchStart(sender: AnyObject) {
         cameraLoopSwitchFlag = cameraLoopSwitchFlag + 1
@@ -491,21 +493,20 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         let fileURL : NSURL = NSURL(fileURLWithPath: filePath)
         fileOutput.startRecordingToOutputFileURL(fileURL, recordingDelegate: self)
         
-        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("stopLoopRecording"), userInfo: nil, repeats: false)
+        loopTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("stopLoopRecording"), userInfo: nil, repeats: false)
         
     }
     
     func stopLoopRecording() {
         print("5sec")
+        loopTimer.invalidate()
         fileOutput.stopRecording()
     }
     
-    
-    
-
-
-    
     func backToCameraFromLoopRecording() {
+        cameraLoopSwitchFlag = 1
+        loopTimer.invalidate()
+        fileOutput.stopRecording()
         loopSwitch.setTitle("loop", forState: UIControlState.Normal)
     }
     
