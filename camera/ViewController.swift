@@ -47,18 +47,22 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var playerItem1 : AVPlayerItem!
     var playerItem2 : AVPlayerItem!
     var playerItem3 : AVPlayerItem!
+    var loopItem : AVPlayerItem!
     
     var videoPlayer1 : AVPlayer!
     var videoPlayer2 : AVPlayer!
     var videoPlayer3 : AVPlayer!
+    var loopPlayer : AVPlayer!
     
     var myLayer1 : AVPlayerLayer!
     var myLayer2 : AVPlayerLayer!
     var myLayer3 : AVPlayerLayer!
+    var loopLayer : AVPlayerLayer!
     
     var videoPlayerView1 : AVPlayerView!
     var videoPlayerView2 : AVPlayerView!
     var videoPlayerView3 : AVPlayerView!
+    var videoLoopPlayerView : AVPlayerView!
     
     var movieNumber : Int!
     
@@ -66,6 +70,8 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
     var AudioInput : AVCaptureDeviceInput!
    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
@@ -233,7 +239,6 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
 
     }
-    
     
     func onClickStopButton(sender: UIButton){
         if isRecording {
@@ -450,15 +455,48 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
         
         if (cameraLoopSwitchFlag == 1) {
+            cameraLoopSwitchFlag = 0
+            let avAsset = AVURLAsset(URL: outputFileURL, options: nil)
+            loopItem = AVPlayerItem(asset: avAsset)
+            loopPlayer = AVPlayer(playerItem: loopItem)
+            videoLoopPlayerView = AVPlayerView(frame: self.view.bounds)
+            
+            loopLayer = videoLoopPlayerView.layer as! AVPlayerLayer
+            loopLayer.videoGravity = AVLayerVideoGravityResizeAspect
+            loopLayer.player = loopPlayer
+            
+            let sereenWidth = self.view.bounds.width
+            let sereenHeight = (self.view.bounds.height) + 90
+            self.view.layer.insertSublayer(loopLayer!, atIndex:6)
+            loopLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
+            loopPlay()
             let assetsLib = ALAssetsLibrary()
             assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
-            cameraLoopSwitchFlag = 0
         }
-
-//        let assetsLib = ALAssetsLibrary()
-//        assetsLib.writeVideoAtPathToSavedPhotosAlbum(outputFileURL, completionBlock: nil)
-        
     }
+    
+    func loopPlay() {
+        loopPlayer.seekToTime(kCMTimeZero)
+        loopPlayer.play()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerLoopDidPlayToEndTime:",
+            name: AVPlayerItemDidPlayToEndTimeNotification,
+            object: nil)
+    }
+    
+    func playerLoopDidPlayToEndTime(notification: NSNotification) {
+        dispatch_async(dispatch_get_main_queue(), {        NSLog("notification recieve")
+            NSLog("notification seekToHead")
+            self.loopPlayer.seekToTime(kCMTimeZero, completionHandler: {(finished: Bool) in
+                if finished {
+                    NSLog("notification replay")
+                    self.loopPlayer.play()
+                }
+                
+            })
+            
+        })
+    }
+    
     
     // camera loop switch
     @IBOutlet weak var loopSwitch: UIButton!
@@ -498,15 +536,17 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func stopLoopRecording() {
-        print("5sec")
-        loopTimer.invalidate()
+//        print("5sec")
         fileOutput.stopRecording()
+//        print("stop")
+        loopTimer.invalidate()
     }
     
     func backToCameraFromLoopRecording() {
+        fileOutput.stopRecording()
+//        print("stop")
         cameraLoopSwitchFlag = 1
         loopTimer.invalidate()
-        fileOutput.stopRecording()
         loopSwitch.setTitle("loop", forState: UIControlState.Normal)
     }
     
