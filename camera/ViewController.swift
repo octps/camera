@@ -455,7 +455,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
         
         if (cameraLoopSwitchFlag == 1) {
-            cameraLoopSwitchFlag = 0
+//            cameraLoopSwitchFlag = 0
             let avAsset = AVURLAsset(URL: outputFileURL, options: nil)
             loopItem = AVPlayerItem(asset: avAsset)
             loopPlayer = AVPlayer(playerItem: loopItem)
@@ -504,7 +504,10 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var loopTimer : NSTimer!
     
     @IBAction func cameraLoopSwitchStart(sender: AnyObject) {
+        print("cameraLoopSwitchStart")
         cameraLoopSwitchFlag = cameraLoopSwitchFlag + 1
+        print(cameraLoopSwitchFlag)
+        
         if (cameraLoopSwitchFlag == 2) {
             cameraLoopSwitchFlag = 0
         }
@@ -543,9 +546,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func backToCameraFromLoopRecording() {
-        fileOutput.stopRecording()
-//        print("stop")
-        cameraLoopSwitchFlag = 1
+//        fileOutput.stopRecording()
+        print("stop")
+//        loopLayer?.removeFromSuperlayer()
+        self.view.sendSubviewToBack(videoLoopPlayerView)
+        self.loopPlayer.pause()
+        cameraLoopSwitchFlag = 0
         loopTimer.invalidate()
         loopSwitch.setTitle("loop", forState: UIControlState.Normal)
     }
