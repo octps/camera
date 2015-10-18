@@ -467,7 +467,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
             
             let sereenWidth = self.view.bounds.width
             let sereenHeight = (self.view.bounds.height) + 90
-            self.view.layer.insertSublayer(loopLayer!, atIndex:6)
+            self.view.layer.insertSublayer(loopLayer!, atIndex:5)
             loopLayer?.frame = CGRectMake(0, 0, sereenWidth, sereenHeight)
             loopPlay()
             let assetsLib = ALAssetsLibrary()
